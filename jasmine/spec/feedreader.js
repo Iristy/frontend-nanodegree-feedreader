@@ -97,36 +97,36 @@ $(function() {
 
         it('is called', () => {
             let feed = document.querySelector('.feed');
-            let entry = feed.querySelector('.entry-link');
+            let entries = feed.getElementsByClassName('entry');
+            expect(entries.length).toBeGreaterThan(0);
 
+            let firstEntry = entries[0];
             // If any entry exists, then the feed is loaded and not empty.
-            expect(entry).not.toBeUndefined();
-            expect(entry).not.toBe(null);
+            expect(firstEntry).not.toBeUndefined();
+            expect(firstEntry).not.toBe(null);
         });
     });
 
     /* TODO: Write a new test suite named "New Feed Selection" */
     describe('New Feed Selection', () => {
 
-        // Keep a global reference to the first entry of feed id 1.
+        // Keep a global reference to the first entry of feed id 0 and 1.
+        let entry0;
         let entry1;
-
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
         beforeEach((cb) => {
             const feed = document.querySelector('.feed');
+            entry0 = feed.querySelector('.entry');
             loadFeed(0, () => {
                 loadFeed(1, cb);
-                entry1 = feed.querySelector('.entry-link');
+                entry0 = feed.querySelector('.entry');
             });
         });
 
-        it('content changed', () => {
-            const feed = document.querySelector('.feed');
-            let entry0 = feed.querySelector('.entry-link');
-            
+        it('content changed', () => {                        
             // Compare the first entry for each feed.
             expect(entry0).not.toBe(entry1);
         });
